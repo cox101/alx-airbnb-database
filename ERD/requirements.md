@@ -72,7 +72,7 @@ This diagram was created using [Draw.io](https://draw.io) for clear and professi
 
 ## ER Diagram File
 The ERD image is saved in this directory as:  
-📄 `![airbnb_erd.png.png](../../Downloads/airbnb_erd.png.png)`
+📄 `![ERD.png.png](../../../Downloads/ERD.png.png)`
 
 ---
 
