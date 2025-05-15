@@ -1,34 +1,34 @@
-# Query Optimization Report
+# Optimization Report
 
-## Objective
-Optimize a complex SQL query to reduce execution time and improve performance.
+## Initial Query
+The initial query joined the `bookings`, `users`, `properties`, and `payments` tables to fetch all related details. It used:
 
----
+- `JOIN` on 3 other tables
+- `ORDER BY` on `bookings.id`
 
-## Initial Query Analysis
+## Performance Analysis (Using EXPLAIN)
+The query was slow due to:
 
-### Query:
-- Joins `bookings`, `users`, `properties`, and `payments`
-- Retrieves multiple fields
-
-### Performance Analysis (Using EXPLAIN):
-
-- **Joins**: All 4 tables joined using primary and foreign keys
-- **Cost**: ~8000
-- **Execution Time**: ~150 ms
-- **Issues**:
-    - No selective filtering (`WHERE` clause missing)
-    - Fetching all columns, even unnecessary ones
-    - No index usage observed
-
----
+- No indexes on foreign keys like `user_id`, `property_id`, or `booking_id`.
+- Selecting unnecessary columns (e.g., `location`, `status`).
+- Multiple full table scans.
 
 ## Optimization Steps
 
-### 1. Add Relevant Indexes
+1. **Reduced Columns**:
+  - Removed unnecessary columns like `location` and `status` to reduce data load.
 
-```sql
--- Indexes (already added in previous tasks, but critical here too)
-CREATE INDEX idx_bookings_user_id ON bookings(user_id);
-CREATE INDEX idx_bookings_property_id ON bookings(property_id);
-CREATE INDEX idx_payments_booking_id ON payments(booking_id);
+2. **Index Suggestions**:
+  - Added indexes on:
+    - `bookings.user_id`
+    - `bookings.property_id`
+    - `payments.booking_id`
+
+3. **Query Refactor**:
+  - Used only necessary fields.
+  - Kept the same JOIN logic but made it lighter.
+
+## Result
+The optimized query executed faster due to:
+- Smaller result size.
+- Use of indexes which reduced full table scans.
