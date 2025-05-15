@@ -30,4 +30,3 @@ SELECT
     b.end_date
 FROM users u
          FULL OUTER JOIN bookings b ON u.id = b.user_id;
-
