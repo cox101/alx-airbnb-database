@@ -1,18 +1,23 @@
 # Join Queries - ALX Airbnb Database Module
 
-This file contains SQL scripts demonstrating advanced SQL JOINs using the simulated Airbnb schema.
+# Complex Queries with Joins
 
-## 📄 Queries Included
+## Objective
+To practice and demonstrate the ability to use various types of SQL joins to retrieve meaningful insights from multiple related tables.
 
-1. **INNER JOIN**  
-   Retrieves all bookings and the users who made those bookings.
+## Implemented Joins
 
-2. **LEFT JOIN**  
-   Retrieves all properties along with their reviews, including properties without reviews.
+### 1. INNER JOIN
+This query retrieves all bookings and the respective users who made those bookings. It only includes rows where there is a match between `bookings.user_id` and `users.id`.
 
-3. **FULL OUTER JOIN**  
-   Retrieves all users and bookings, including users without bookings and bookings without a linked user.
-    - **Note**: Since MySQL does not support `FULL OUTER JOIN` natively, it is emulated using a `UNION` of `LEFT JOIN` and `RIGHT JOIN`.
+### 2. LEFT JOIN
+This query retrieves all properties and their reviews. It includes all properties even if they don’t have any reviews.
+
+### 3. FULL OUTER JOIN
+This query retrieves all users and all bookings. It ensures that users without bookings and bookings without users are still included in the results.
+
+## Notes
+- All queries include `ORDER BY` clauses to ensure results are sorted and easy to read.
 
 ## Subqueries
 
