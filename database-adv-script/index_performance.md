@@ -1,25 +1,27 @@
-# Indexing for Query Performance
+# Index Performance Report
 
-## Objective
-Improve performance of frequent queries by adding indexes on columns used in WHERE, JOIN, and ORDER BY clauses.
+## Why Indexes?
 
----
+Indexes make it faster to find rows in large tables — like how a book index helps you find a topic quickly.
 
-## Step 1: Identify High-Usage Columns
+## What We Did
+Booked at queries that join tables or filter/search using specific columns. These are the columns we indexed:
 
-| Table     | Column        | Reason for Indexing                  |
-|-----------|---------------|--------------------------------------|
-| bookings  | user_id       | Frequently used in JOIN with users   |
-| bookings  | property_id   | Frequently used in JOIN with properties |
-| bookings  | created_at    | Used in ORDER BY or range queries    |
-| users     | email         | Used in user lookups and authentication |
-| properties| location      | Used in filtering properties         |
+- `bookings.user_id` → used in JOIN with users.
+- `bookings.property_id` → used in JOIN with properties.
+- `payments.booking_id` → used in JOIN with bookings.
+- `users.email` → often used in login or search.
+- `bookings.start_date` → used in date range filters.
 
----
+## Performance Test
 
-## Step 2: Create Indexes
-
-Indexes were created using the following SQL commands:
+Ran this query before and after adding indexes:
 
 ```sql
--- See database_index.sql file for actual commands.
+EXPLAIN
+SELECT bookings.id, users.first_name, properties.name
+FROM bookings
+JOIN users ON bookings.user_id = users.id
+JOIN properties ON bookings.property_id = properties.id
+WHERE bookings.start_date >= '2024-01-01'
+ORDER BY bookings.id;
